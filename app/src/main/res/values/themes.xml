@@ -1,0 +1,21 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="Base.Theme.TicketMall" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+        <item name="colorPrimary">@color/main</item>
+        <item name="colorPrimaryDark">@color/main</item>
+        <item name="colorAccent">@color/main</item>
+        <!-- 状态栏颜色 -->
+        <item name="android:statusBarColor">@color/main</item>
+        <!-- 移除所有按钮的阴影效果 -->
+        <item name="materialButtonStyle">@style/Widget.App.Button.NoElevation</item>
+    </style>
+
+    <style name="Theme.TicketMall" parent="Base.Theme.TicketMall" />
+
+    <!-- 自定义无阴影按钮样式 -->
+    <style name="Widget.App.Button.NoElevation" parent="Widget.MaterialComponents.Button">
+        <item name="elevation">0dp</item>
+        <item name="android:stateListAnimator">@null</item>
+    </style>
+</resources>

@@ -1,0 +1,14 @@
+# Android 通用忽略规则
+.gradle/
+/local.properties
+/.idea/
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/gradle.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/libraries
+.DS_Store
+/build/
+/captures/
+.externalNativeBuild/
