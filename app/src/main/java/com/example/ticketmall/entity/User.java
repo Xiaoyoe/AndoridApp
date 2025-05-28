@@ -29,6 +29,11 @@ public class User implements Serializable {
      */
     private Boolean remember;
 
+    /**
+     * 邮箱
+     */
+    private String email;
+
     public Integer getId() {
         return id;
     }
@@ -67,5 +72,13 @@ public class User implements Serializable {
 
     public void setRemember(Boolean remember) {
         this.remember = remember;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

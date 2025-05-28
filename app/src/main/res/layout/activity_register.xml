@@ -7,10 +7,11 @@
     android:orientation="vertical"
     tools:context=".activity.LoginActivity">
 
+    <!-- 标题栏 -->
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="52dp">
-        <!--一个是显示返回键，一个是显示标题框-->
+        <!-- 返回按钮 -->
         <ImageView
             android:id="@+id/iv_back"
             android:layout_width="52dp"
@@ -18,6 +19,7 @@
             android:padding="12dp"
             android:src="@drawable/ic_back" />
 
+        <!-- 标题文本 -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -28,6 +30,7 @@
             android:textStyle="bold" />
     </FrameLayout>
 
+    <!-- 内容区域 -->
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -40,50 +43,106 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingTop="20dp">
 
-            <EditText
-                android:id="@+id/et_username"
+            <!-- 用户名标签和输入框 -->
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="42dp"
-                android:background="@drawable/bg_input"
-                android:hint="请输入用户名"
-                android:maxLines="1"
-                android:paddingStart="12dp"
-                android:paddingEnd="12dp"
-                android:textSize="14sp" />
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="16dp">
 
-            <EditText
-                android:id="@+id/et_password"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="账户："
+                    android:textColor="#000000"
+                    android:textSize="14sp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="10dp"
+                    android:width="80dp"/>
+
+                <EditText
+                    android:id="@+id/et_username"
+                    android:layout_width="0dp"
+                    android:layout_height="42dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_input"
+                    android:hint="请输入至少3位用户名"
+                    android:maxLines="1"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <!-- 邮箱标签和输入框 -->
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="42dp"
-                android:layout_marginTop="16dp"
-                android:background="@drawable/bg_input"
-                android:hint="请输入密码"
-                android:inputType="textPassword"
-                android:maxLines="1"
-                android:paddingStart="12dp"
-                android:paddingEnd="12dp"
-                android:textSize="14sp" />
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="16dp">
 
-            <EditText
-                android:id="@+id/et_password_again"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="邮箱："
+                    android:textColor="#000000"
+                    android:textSize="14sp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="10dp"
+                    android:width="80dp"/>
+
+                <EditText
+                    android:id="@+id/et_email"
+                    android:layout_width="0dp"
+                    android:layout_height="42dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_input"
+                    android:hint="请输入邮箱地址"
+                    android:inputType="textEmailAddress"
+                    android:maxLines="1"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <!-- 密码标签和输入框 -->
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="42dp"
-                android:layout_marginTop="16dp"
-                android:background="@drawable/bg_input"
-                android:hint="请再次输入密码"
-                android:inputType="textPassword"
-                android:maxLines="1"
-                android:paddingStart="12dp"
-                android:paddingEnd="12dp"
-                android:textSize="14sp" />
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="32dp">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="密码："
+                    android:textColor="#000000"
+                    android:textSize="14sp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="10dp"
+                    android:width="80dp"/>
+
+                <EditText
+                    android:id="@+id/et_password"
+                    android:layout_width="0dp"
+                    android:layout_height="42dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_input"
+                    android:hint="请输入至少6位密码"
+                    android:inputType="textPassword"
+                    android:maxLines="1"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <!-- 注册按钮 -->
             <Button
                 android:id="@+id/btn_register"
                 android:layout_width="match_parent"
                 android:layout_height="44dp"
-                android:layout_marginTop="32dp"
                 android:background="@drawable/bg_button_standard"
                 android:text="注册"
                 android:textColor="@color/white"
