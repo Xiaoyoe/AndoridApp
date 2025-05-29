@@ -25,7 +25,6 @@ public class ApiManager {
     }
 
     // 注册接口
-// 注册接口
     public static void register(String username, String password, String email, HttpUtils.HttpCallback callback) {
         String url = BASE_URL + "/auth/register";
 
@@ -38,6 +37,42 @@ public class ApiManager {
         // 转换为 JSON 并发送请求
         String json = HttpUtils.getInstance().toJson(user);
         HttpUtils.getInstance().postJson(url, json, callback);
+    }
+
+    // 获取票务总列表
+    public static void getTicketList(HttpUtils.HttpCallback callback) {
+        String url = BASE_URL + "/tickets";
+        HttpUtils.getInstance().get(url, null, callback);
+    }
+
+    // 获取电影票务列表
+    public static void getMovieList(HttpUtils.HttpCallback callback) {
+        String url = BASE_URL + "/tickets/movie";
+        HttpUtils.getInstance().get(url, null, callback);
+    }
+
+    // 获取演唱会票务列表
+    public static void getConcertList(HttpUtils.HttpCallback callback) {
+        String url = BASE_URL + "/tickets/concert";
+        HttpUtils.getInstance().get(url, null, callback);
+    }
+
+    // 获取音乐节票务列表
+    public static void getMusicFestivalList(HttpUtils.HttpCallback callback) {
+        String url = BASE_URL + "/tickets/music_festival";
+        HttpUtils.getInstance().get(url, null, callback);
+    }
+
+    // 获取脱口秀票务列表
+    public static void getComedyShowList(HttpUtils.HttpCallback callback) {
+        String url = BASE_URL + "/tickets/comedy_show";
+        HttpUtils.getInstance().get(url, null, callback);
+    }
+
+    // 获取商品列表
+    public static void getStuffList(HttpUtils.HttpCallback callback) {
+        String url = BASE_URL + "/stuffs";
+        HttpUtils.getInstance().get(url, null, callback);
     }
 
     // 其他接口...

@@ -23,9 +23,12 @@ import com.example.ticketmall.sqlite.ExchangeDB;
 import com.example.ticketmall.sqlite.UserDB;
 import com.gzone.university.utils.CurrentUserUtils;
 
+import java.util.List;
+
 public class ExchangeFragment extends Fragment {
 
     private RecyclerView rvExchange;
+    private StuffAdapter adapter;
 
     @Nullable
     @Override
@@ -38,6 +41,8 @@ public class ExchangeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         initView();
         initAdapter();
+        // 调用 loadData 方法加载商品数据
+        loadData();
     }
 
     private void initView() {
@@ -45,12 +50,11 @@ public class ExchangeFragment extends Fragment {
     }
 
     private void initAdapter() {
-        StuffAdapter adapter = new StuffAdapter();
+        adapter = new StuffAdapter(getContext()); // 传入上下文
         rvExchange.setAdapter(adapter);
         rvExchange.setLayoutManager(new GridLayoutManager(getContext(), 2));
         int spacing = (int) (getResources().getDisplayMetrics().density * 16);
         rvExchange.addItemDecoration(new GridSpacingItemDecoration(2, spacing, true));
-        adapter.setList(AppData.getStuffList());
         adapter.setOnItemClickListener(new StuffAdapter.OnItemClickListener() {
             @Override
             public void onExchangeClick(Stuff item) {
@@ -69,6 +73,26 @@ public class ExchangeFragment extends Fragment {
                         CurrentUserUtils.setCurrentUser(user);
                     }
                 }
+            }
+        });
+    }
+
+    /**
+     * 加载商品数据的方法
+     */
+    private void loadData() {
+        // 调用 AppData 的 getStuffList 方法获取商品列表
+        AppData.getStuffList(new AppData.DataCallback<List<Stuff>>() {
+            @Override
+            public void onSuccess(List<Stuff> stuffList) {
+                // 请求成功，将获取到的商品列表设置给适配器
+                adapter.setList(stuffList);
+            }
+
+            @Override
+            public void onFailure(String errorMsg) {
+                // 处理请求失败的情况，这里可以添加更多的错误处理逻辑，例如显示错误提示
+                Toast.makeText(getContext(), "加载商品数据失败：" + errorMsg, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -111,4 +135,3 @@ public class ExchangeFragment extends Fragment {
         }
     }
 }
-

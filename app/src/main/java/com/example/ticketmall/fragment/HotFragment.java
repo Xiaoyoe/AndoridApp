@@ -56,7 +56,7 @@ public class HotFragment extends Fragment {
         initAdapter();
         initTabListeners();
         updateTabStyles();
-        loadData();
+//        loadData();
     }
 
     private void initView() {
@@ -119,31 +119,114 @@ public class HotFragment extends Fragment {
     }
 
     private void loadData() {
-        List<Ticket> dataList;
+        final List<Ticket> dataList = new ArrayList<>();
         switch (currentTicketType) {
             case CONCERT:
-                dataList = AppData.getConcertList();
+                AppData.getConcertList(new AppData.DataCallback<List<Ticket>>() {
+                    @Override
+                    public void onSuccess(List<Ticket> concertList) {
+                        dataList.addAll(concertList);
+                        adapter.setList(dataList);
+                    }
+
+                    @Override
+                    public void onFailure(String errorMsg) {
+                        // 处理请求失败的情况
+                    }
+                });
                 break;
             case MUSIC:
-                dataList = AppData.getMusicFestivalList();
+                AppData.getMusicFestivalList(new AppData.DataCallback<List<Ticket>>() {
+                    @Override
+                    public void onSuccess(List<Ticket> musicFestivalList) {
+                        dataList.addAll(musicFestivalList);
+                        adapter.setList(dataList);
+                    }
+
+                    @Override
+                    public void onFailure(String errorMsg) {
+                        // 处理请求失败的情况
+                    }
+                });
                 break;
             case COMEDY:
-                dataList = AppData.getComedyShowList();
+                AppData.getComedyShowList(new AppData.DataCallback<List<Ticket>>() {
+                    @Override
+                    public void onSuccess(List<Ticket> comedyShowList) {
+                        dataList.addAll(comedyShowList);
+                        adapter.setList(dataList);
+                    }
+
+                    @Override
+                    public void onFailure(String errorMsg) {
+                        // 处理请求失败的情况
+                    }
+                });
                 break;
             case MOVIE:
-                dataList = AppData.getMovieList();
+                AppData.getMovieList(new AppData.DataCallback<List<Ticket>>() {
+                    @Override
+                    public void onSuccess(List<Ticket> movieList) {
+                        dataList.addAll(movieList);
+                        adapter.setList(dataList);
+                    }
+
+                    @Override
+                    public void onFailure(String errorMsg) {
+                        // 处理请求失败的情况
+                    }
+                });
                 break;
             default:
-                //获取所有类型的数据
-                dataList = new ArrayList<>();
-                dataList.addAll(AppData.getMovieList());
-                dataList.addAll(AppData.getComedyShowList());
-                dataList.addAll(AppData.getMusicFestivalList());
-                dataList.addAll(AppData.getConcertList());
-                //打乱顺序
-                Collections.shuffle(dataList);
+                // 获取所有类型的数据
+                AppData.getMovieList(new AppData.DataCallback<List<Ticket>>() {
+                    @Override
+                    public void onSuccess(List<Ticket> movieList) {
+                        dataList.addAll(movieList);
+                        AppData.getComedyShowList(new AppData.DataCallback<List<Ticket>>() {
+                            @Override
+                            public void onSuccess(List<Ticket> comedyShowList) {
+                                dataList.addAll(comedyShowList);
+                                AppData.getMusicFestivalList(new AppData.DataCallback<List<Ticket>>() {
+                                    @Override
+                                    public void onSuccess(List<Ticket> musicFestivalList) {
+                                        dataList.addAll(musicFestivalList);
+                                        AppData.getConcertList(new AppData.DataCallback<List<Ticket>>() {
+                                            @Override
+                                            public void onSuccess(List<Ticket> concertList) {
+                                                dataList.addAll(concertList);
+                                                // 打乱顺序
+                                                Collections.shuffle(dataList);
+                                                adapter.setList(dataList);
+                                            }
+
+                                            @Override
+                                            public void onFailure(String errorMsg) {
+                                                // 处理请求失败的情况
+                                            }
+                                        });
+                                    }
+
+                                    @Override
+                                    public void onFailure(String errorMsg) {
+                                        // 处理请求失败的情况
+                                    }
+                                });
+                            }
+
+                            @Override
+                            public void onFailure(String errorMsg) {
+                                // 处理请求失败的情况
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onFailure(String errorMsg) {
+                        // 处理请求失败的情况
+                    }
+                });
                 break;
         }
-        adapter.setList(dataList);
     }
 }
