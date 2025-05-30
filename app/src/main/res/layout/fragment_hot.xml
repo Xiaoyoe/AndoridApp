@@ -1,29 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_common"
     android:orientation="vertical">
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="52dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="热门活动"
-            android:textColor="#FFFFFF"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-    </FrameLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+    />
+
+    <com.youth.banner.Banner
+        android:id="@+id/banner"
+        android:layout_width="380dp"
+        android:layout_height="250dp"
+        android:layout_gravity="center_horizontal"
+        android:rotationX="0" />
+
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/bg_page_content"
         android:orientation="vertical">
+
+
 
         <LinearLayout
             android:id="@+id/ll_tab"
@@ -41,7 +44,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@drawable/bg_tab_selected"
+                android:background="@drawable/bg_button"
                 android:gravity="center"
                 android:orientation="vertical"
                 android:padding="8dp">
@@ -49,7 +52,7 @@
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:src="@drawable/ic_hot_all" />
+                    android:src="@drawable/icon_all" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -74,7 +77,7 @@
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:src="@drawable/ic_hot_movie" />
+                    android:src="@drawable/icon_facilities" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -99,7 +102,7 @@
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:src="@drawable/ic_hot_concert" />
+                    android:src="@drawable/icon_concert" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -124,7 +127,7 @@
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:src="@drawable/ic_hot_music" />
+                    android:src="@drawable/icon_livehorse" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -149,7 +152,7 @@
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:src="@drawable/ic_hot_comedy" />
+                    android:src="@drawable/icon_talkshow" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -162,10 +165,10 @@
 
         </LinearLayout>
 
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_hot"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="wrap_content" />
     </LinearLayout>
-
-</LinearLayout>
+</androidx.appcompat.widget.LinearLayoutCompat>

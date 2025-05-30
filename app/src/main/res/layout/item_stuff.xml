@@ -14,7 +14,7 @@
         android:layout_height="180dp"
         android:adjustViewBounds="true"
         android:scaleType="centerCrop"
-        android:src="@drawable/test2"
+        android:src="@drawable/error"
         app:shapeAppearanceOverlay="@style/RoundedCorner" />
 
     <androidx.appcompat.widget.AppCompatTextView

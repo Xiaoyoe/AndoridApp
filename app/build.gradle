@@ -43,4 +43,7 @@ dependencies {
 
     //网络请求
     implementation'com.squareup.okhttp3:okhttp:4.11.0'
+
+    // 轮播图依赖
+    implementation 'io.github.youth5201314:banner:2.2.3'
 }

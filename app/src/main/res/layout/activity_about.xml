@@ -7,7 +7,9 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="52dp">
+        android:layout_height="52dp"
+
+        >
         <!--一个是显示返回键，一个是显示标题框-->
         <ImageView
             android:id="@+id/iv_back"
@@ -16,14 +18,11 @@
             android:padding="12dp"
             android:src="@drawable/ic_back" />
 
-        <TextView
-            android:layout_width="wrap_content"
+        <ImageView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="关于我们"
-            android:textColor="#FFFFFF"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            />
+
     </FrameLayout>
 
     <LinearLayout
