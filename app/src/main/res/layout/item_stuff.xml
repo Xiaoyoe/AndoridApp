@@ -5,25 +5,23 @@
     android:layout_height="wrap_content"
     android:background="@drawable/bg_single_item"
     android:orientation="vertical"
-    android:padding="12dp">
-
-    <ImageView
-        android:id="@+id/iv_image"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:scaleType="centerCrop" />
+    android:padding="12dp"
+    android:layout_margin="8dp">
 
     <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/iv_cover"
-        android:layout_width="165.5dp"
-        android:layout_height="165.5dp"
+        android:id="@+id/iv_image"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:adjustViewBounds="true"
         android:scaleType="centerCrop"
+        android:src="@drawable/test2"
         app:shapeAppearanceOverlay="@style/RoundedCorner" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:ellipsize="end"
         android:maxLines="2"
         android:textColor="@color/black"
@@ -34,7 +32,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:gravity="center_horizontal">
+        android:gravity="center_vertical">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_points"
@@ -42,21 +40,23 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textColor="@color/main"
-            android:textSize="12sp" />
+            android:textSize="14sp"
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/tv_exchange"
             android:layout_width="wrap_content"
-            android:layout_height="28dp"
+            android:layout_height="32dp"
             android:background="@drawable/bg_button_outline"
             android:clickable="true"
             android:focusable="true"
             android:gravity="center"
-            android:paddingStart="12dp"
-            android:paddingEnd="12dp"
-            android:text="购买"
+            android:minWidth="80dp"
+            android:paddingHorizontal="12dp"
+            android:text="兑换"
+            android:textAllCaps="false"
             android:textColor="@color/main"
-            android:textSize="12sp" />
+            android:textSize="14sp" />
 
     </LinearLayout>
 

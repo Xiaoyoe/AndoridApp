@@ -49,28 +49,44 @@ public class StuffAdapter extends RecyclerView.Adapter<StuffAdapter.StuffViewHol
         holder.tvName.setText(item.getName());
         holder.tvPoints.setText(String.valueOf(item.getPoints()));
 
-        // 根据 imageUrl 和 imageResId 的情况加载图片
-        if (item.getImageUrl() != null && !item.getImageUrl().isEmpty()) {
-            // 优先加载网络图片
+        // 优化后的图片加载逻辑：优先本地资源 -> 网络图片 -> 默认占位图
+        if (item.getImageResId() != null && !item.getImageResId().isEmpty()) {
+            // 1. 先尝试加载本地资源
+            int resourceId = context.getResources().getIdentifier(
+                    item.getImageResId(),
+                    "drawable",
+                    context.getPackageName());
+
+            if (resourceId != 0) {
+                // 本地资源存在，直接加载
+                holder.ivImage.setImageResource(resourceId);
+            } else if (item.getImageUrl() != null && !item.getImageUrl().isEmpty()) {
+                // 2. 本地资源不存在但网络图片可用，加载网络图片
+                Glide.with(context)
+                        .load(item.getImageUrl())
+                        .placeholder(R.drawable.error) // 加载中显示占位图
+                        .error(R.drawable.error)      // 加载失败显示错误图
+                        .into(holder.ivImage);
+            } else {
+                // 3. 两者都不可用，显示默认占位图
+                holder.ivImage.setImageResource(R.drawable.error);
+            }
+        } else if (item.getImageUrl() != null && !item.getImageUrl().isEmpty()) {
+            // 只有网络图片的情况
             Glide.with(context)
                     .load(item.getImageUrl())
-                    .placeholder(R.drawable.ic_cart_add)
-                    .error(R.drawable.ic_cart_cut)
+                    .placeholder(R.drawable.error)
+                    .error(R.drawable.error)
                     .into(holder.ivImage);
-        } else if (item.getImageResId() != null) {
-            // 加载本地资源图片
-            holder.ivImage.setImageResource(item.getImageResId());
         } else {
-            // 显示默认占位图
-            holder.ivImage.setImageResource(R.drawable.ic_cart_add);
+            // 没有任何图片资源，显示默认占位图
+            holder.ivImage.setImageResource(R.drawable.error);
         }
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (onItemClickListener != null) {
-                    onItemClickListener.onExchangeClick(item);
-                }
+        // 设置点击事件
+        holder.itemView.setOnClickListener(v -> {
+            if (onItemClickListener != null) {
+                onItemClickListener.onExchangeClick(item);
             }
         });
     }
@@ -80,6 +96,7 @@ public class StuffAdapter extends RecyclerView.Adapter<StuffAdapter.StuffViewHol
         return stuffList.size();
     }
 
+    // ViewHolder 类保持不变
     public static class StuffViewHolder extends RecyclerView.ViewHolder {
         TextView tvName;
         TextView tvPoints;
