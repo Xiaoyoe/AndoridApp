@@ -42,7 +42,7 @@ public class ExchangeFragment extends Fragment {
         initView();
         initAdapter();
         // 调用 loadData 方法加载商品数据
-        loadData();
+//        loadData();
     }
 
     private void initView() {

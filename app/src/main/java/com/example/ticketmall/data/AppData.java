@@ -13,6 +13,24 @@ import java.util.List;
 
 public class AppData {
 
+    // 获取票务总列表
+    public static void getTicketList(final DataCallback<List<Ticket>> callback) {
+        ApiManager.getTicketList(new HttpUtils.HttpCallback() {
+            @Override
+            public void onSuccess(String response) {
+                Gson gson = new Gson();
+                Type type = new TypeToken<List<Ticket>>() {}.getType();
+                List<Ticket> ticketList = gson.fromJson(response, type);
+                callback.onSuccess(ticketList);
+            }
+
+            @Override
+            public void onFailure(String errorMsg) {
+                callback.onFailure(errorMsg);
+            }
+        });
+    }
+
     // 获取电影票务列表
     public static void getMovieList(final DataCallback<List<Ticket>> callback) {
         ApiManager.getMovieList(new HttpUtils.HttpCallback() {

@@ -5,11 +5,8 @@ import java.io.Serializable;
 public class Ticket implements Serializable {
 
     private Integer id;
-
-    private Integer type;
-
+    private String type;  // 修改为String类型
     private Integer userId;
-
     private String title;
 
     /**
@@ -18,9 +15,7 @@ public class Ticket implements Serializable {
     private String score;
 
     private Integer imageResId;
-
     private String content1;
-
     private String content2;
 
     /**
@@ -36,11 +31,12 @@ public class Ticket implements Serializable {
         this.id = id;
     }
 
-    public Integer getType() {
+    // 修改getter和setter为String类型
+    public String getType() {
         return type;
     }
 
-    public void setType(Integer type) {
+    public void setType(String type) {
         this.type = type;
     }
 
@@ -98,5 +94,20 @@ public class Ticket implements Serializable {
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    @Override
+    public String toString() {
+        return "Ticket{" +
+                "id=" + id +
+                ", type='" + type + '\'' +
+                ", userId=" + userId +
+                ", title='" + title + '\'' +
+                ", score='" + score + '\'' +
+                ", imageResId=" + imageResId +
+                ", content1='" + content1 + '\'' +
+                ", content2='" + content2 + '\'' +
+                ", price=" + price +
+                '}';
     }
 }
