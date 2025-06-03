@@ -121,7 +121,7 @@ public class HotFragment extends Fragment {
     }
 
     /**
-     * 统一数据加载方法（仿照ExchangeFragment风格）
+     * 统一数据加载方法
      */
     private void loadData() {
         switch (currentTicketType) {

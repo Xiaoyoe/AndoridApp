@@ -59,13 +59,13 @@ public class ApiManager {
 
     // 获取音乐节票务列表
     public static void getMusicFestivalList(HttpUtils.HttpCallback callback) {
-        String url = BASE_URL + "/tickets/music_festival";
+        String url = BASE_URL + "/tickets/music";
         HttpUtils.getInstance().get(url, null, callback);
     }
 
     // 获取脱口秀票务列表
     public static void getComedyShowList(HttpUtils.HttpCallback callback) {
-        String url = BASE_URL + "/tickets/comedy_show";
+        String url = BASE_URL + "/tickets/comedy";
         HttpUtils.getInstance().get(url, null, callback);
     }
 
@@ -75,5 +75,4 @@ public class ApiManager {
         HttpUtils.getInstance().get(url, null, callback);
     }
 
-    // 其他接口...
 }

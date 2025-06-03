@@ -18,39 +18,38 @@ import java.util.List;
 public class SingleItemAdapter extends RecyclerView.Adapter<SingleItemAdapter.ViewHolder> {
 
     private final List<Ticket> list = new ArrayList<>();
-
     private OnItemClickListener onItemClickListener;
 
     @NonNull
     @Override
-    public SingleItemAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_single, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull SingleItemAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Ticket item = list.get(position);
+
         holder.tvTitle.setText(item.getTitle());
         holder.tvScore.setText(item.getScore());
         holder.tvContent1.setText(item.getContent1());
         holder.tvContent2.setText(item.getContent2());
         holder.tvPrice.setText(String.format("￥%.2f", item.getPrice()));
-        holder.ivCover.setImageResource(item.getImageResId());
-        holder.ivAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (onItemClickListener != null) {
-                    onItemClickListener.onAddClick(item);
-                }
+
+        // 修改图片加载逻辑
+        int imageResId = item.getImageResId(holder.itemView.getContext());
+        holder.ivCover.setImageResource(imageResId != 0 ? imageResId : R.drawable.error);
+
+        holder.ivAdd.setOnClickListener(view -> {
+            if (onItemClickListener != null) {
+                onItemClickListener.onAddClick(item);
             }
         });
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (onItemClickListener != null) {
-                    onItemClickListener.onItemClick(item);
-                }
+
+        holder.itemView.setOnClickListener(view -> {
+            if (onItemClickListener != null) {
+                onItemClickListener.onItemClick(item);
             }
         });
     }
@@ -72,14 +71,11 @@ public class SingleItemAdapter extends RecyclerView.Adapter<SingleItemAdapter.Vi
 
     public interface OnItemClickListener {
         void onAddClick(Ticket item);
-
         void onItemClick(Ticket item);
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-
         private final TextView tvTitle, tvScore, tvContent1, tvContent2, tvPrice;
-
         private final ImageView ivCover, ivAdd;
 
         public ViewHolder(@NonNull View itemView) {

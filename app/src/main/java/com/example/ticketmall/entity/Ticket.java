@@ -1,5 +1,9 @@
 package com.example.ticketmall.entity;
 
+import android.content.Context;
+
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 public class Ticket implements Serializable {
@@ -8,6 +12,8 @@ public class Ticket implements Serializable {
     private String type;  // 修改为String类型
     private Integer userId;
     private String title;
+    @SerializedName("image_res_id") // 添加Gson注解确保正确映射
+    private String imageResIdString;
 
     /**
      * 评分
@@ -96,6 +102,31 @@ public class Ticket implements Serializable {
         this.price = price;
     }
 
+    // 新增getter和setter
+    public String getImageResIdString() {
+        return imageResIdString;
+    }
+
+    public void setImageResIdString(String imageResIdString) {
+        this.imageResIdString = imageResIdString;
+    }
+
+    // 新增方法：获取实际的资源ID
+    public int getImageResId(Context context) {
+        if (imageResId != null) {
+            return imageResId;
+        }
+        if (imageResIdString != null && !imageResIdString.isEmpty()) {
+            return context.getResources().getIdentifier(
+                    imageResIdString,
+                    "drawable",
+                    context.getPackageName()
+            );
+        }
+        return 0; // 返回0表示无效资源
+    }
+
+    // 更新toString方法
     @Override
     public String toString() {
         return "Ticket{" +
@@ -105,6 +136,7 @@ public class Ticket implements Serializable {
                 ", title='" + title + '\'' +
                 ", score='" + score + '\'' +
                 ", imageResId=" + imageResId +
+                ", imageResIdString='" + imageResIdString + '\'' +
                 ", content1='" + content1 + '\'' +
                 ", content2='" + content2 + '\'' +
                 ", price=" + price +
