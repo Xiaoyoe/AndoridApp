@@ -1,8 +1,10 @@
 package com.example.ticketmall.data;
 
 import com.example.ticketmall.api.ApiManager;
+import com.example.ticketmall.entity.BannerDataInfo;
 import com.example.ticketmall.entity.Stuff;
 import com.example.ticketmall.entity.Ticket;
+
 import com.example.ticketmall.utils.HttpUtils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -12,6 +14,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AppData {
+    // 获取轮播图
+    public static void getCarousel(final DataCallback<List<BannerDataInfo>> callback) {
+        ApiManager.getCarousel(new HttpUtils.HttpCallback() {
+            @Override
+            public void onSuccess(String response) {
+                Gson gson = new Gson();
+                Type type = new TypeToken<List<BannerDataInfo>>() {}.getType();
+                List<BannerDataInfo> carouselList = gson.fromJson(response, type);
+                callback.onSuccess(carouselList);
+            }
+
+            @Override
+            public void onFailure(String errorMsg) {
+                callback.onFailure(errorMsg);
+            }
+        })
+;
+    }
 
     // 获取票务总列表
     public static void getTicketList(final DataCallback<List<Ticket>> callback) {

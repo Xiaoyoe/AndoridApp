@@ -39,6 +39,12 @@ public class ApiManager {
         HttpUtils.getInstance().postJson(url, json, callback);
     }
 
+    // 获取轮播图
+    public static void getCarousel(HttpUtils.HttpCallback callback) {
+        String url = BASE_URL + "/carousels";
+        HttpUtils.getInstance().get(url, null, callback);
+    }
+
     // 获取票务总列表
     public static void getTicketList(HttpUtils.HttpCallback callback) {
         String url = BASE_URL + "/tickets";
