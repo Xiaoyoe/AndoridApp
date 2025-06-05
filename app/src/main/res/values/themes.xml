@@ -6,7 +6,7 @@
         <item name="colorPrimaryDark">@color/main</item>
         <item name="colorAccent">@color/main</item>
         <!-- 状态栏颜色 -->
-        <item name="android:statusBarColor">@color/main</item>
+        <item name="android:statusBarColor">@color/main_navbar</item>
         <!-- 移除所有按钮的阴影效果 -->
         <item name="materialButtonStyle">@style/Widget.App.Button.NoElevation</item>
     </style>

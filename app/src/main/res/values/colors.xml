@@ -5,6 +5,7 @@
 
     <color name="hint">#545454</color>
     <color name="border">#EBECF0</color>
-    <color name="main">#ff9a9e</color>
-    <color name="main_pressed">#fad0c4</color>
+    <color name="main">#4facfe</color>
+    <color name="main_pressed">#8fd3f4</color>
+    <color name="main_navbar">#a1c4fd</color>
 </resources>

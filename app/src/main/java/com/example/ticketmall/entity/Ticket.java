@@ -9,25 +9,19 @@ import java.io.Serializable;
 public class Ticket implements Serializable {
 
     private Integer id;
-    private String type;  // 修改为String类型
+    private String type;
     private Integer userId;
     private String title;
-    @SerializedName("image_res_id") // 添加Gson注解确保正确映射
+    @SerializedName("image_res_id")
     private String imageResIdString;
-
-    /**
-     * 评分
-     */
     private String score;
-
     private Integer imageResId;
     private String content1;
     private String content2;
-
-    /**
-     * 单价
-     */
     private Double price;
+
+    public Ticket() {
+    }
 
     public Integer getId() {
         return id;
@@ -37,7 +31,6 @@ public class Ticket implements Serializable {
         this.id = id;
     }
 
-    // 修改getter和setter为String类型
     public String getType() {
         return type;
     }
@@ -60,6 +53,14 @@ public class Ticket implements Serializable {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getImageResIdString() {
+        return imageResIdString;
+    }
+
+    public void setImageResIdString(String imageResIdString) {
+        this.imageResIdString = imageResIdString;
     }
 
     public String getScore() {
@@ -102,15 +103,6 @@ public class Ticket implements Serializable {
         this.price = price;
     }
 
-    // 新增getter和setter
-    public String getImageResIdString() {
-        return imageResIdString;
-    }
-
-    public void setImageResIdString(String imageResIdString) {
-        this.imageResIdString = imageResIdString;
-    }
-
     // 新增方法：获取实际的资源ID
     public int getImageResId(Context context) {
         if (imageResId != null) {
@@ -126,7 +118,6 @@ public class Ticket implements Serializable {
         return 0; // 返回0表示无效资源
     }
 
-    // 更新toString方法
     @Override
     public String toString() {
         return "Ticket{" +

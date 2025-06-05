@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_common"
+    android:background="@drawable/login_bg"
     android:orientation="vertical">
 
     <FrameLayout
@@ -16,7 +16,7 @@
             android:layout_width="52dp"
             android:layout_height="52dp"
             android:padding="12dp"
-            android:src="@drawable/ic_back" />
+            android:src="@drawable/goback" />
 
         <ImageView
             android:layout_width="match_parent"
@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="16dp"
-            android:text="猫眼票务商城"
+            android:text="影票喵-票务商城"
             android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -47,7 +47,16 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="8dp"
-            android:text="Version 1.0.0"
+            android:text="Version 2.0.0 pro max"
+            android:textColor="@color/hint"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="8dp"
+            android:text="XiaoYoe"
             android:textColor="@color/hint"
             android:textSize="14sp" />
 
@@ -56,7 +65,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:lineSpacingExtra="4dp"
-            android:text="猫眼票务商城是一款专注于演出票务销售的移动应用。我们提供电影、演唱会、音乐节、脱口秀等多种类型的票务服务，致力于为用户提供便捷的购票体验。\n\n同时我们还提供积分兑换功能，让您在享受精彩演出的同时还能获得更多优惠和福利。"
+            android:text="🎉 欢迎来到影票喵-您的娱乐生活好伙伴！🎉\n\n📽️ 电影迷？我们覆盖全国95%影院\n🎤 追星族？演唱会门票这里最全\n🎸 音乐控？Livehouse/音乐节任你选\n🎭 文艺范？话剧歌剧脱口秀都有哦~\n\n✨ 额外福利：\n✓ 购票赚积分，兑换超值优惠\n✓ 会员专享价，越买越省钱\n✓ 电子票秒到，扫码直接入场\n\n快来影票喵，发现更多精彩演出吧！"
             android:textColor="@color/black"
             android:textSize="14sp" />
 
@@ -70,7 +79,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="16dp"
-            android:text="Copyright © 2025 猫眼票务商城"
+            android:text="Copyright © 2025 影票喵-票务商城"
             android:textColor="@color/hint"
             android:textSize="12sp" />
 

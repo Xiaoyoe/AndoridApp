@@ -84,7 +84,7 @@
         android:id="@+id/iv_add"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:src="@drawable/ic_add"
+        android:src="@drawable/ic_cart_add"
         android:tint="@color/main"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

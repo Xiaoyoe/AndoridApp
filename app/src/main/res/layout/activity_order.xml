@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_common"
+    android:background="@drawable/login_bg"
     android:orientation="vertical">
 
     <FrameLayout
@@ -15,7 +15,7 @@
             android:layout_width="52dp"
             android:layout_height="52dp"
             android:padding="12dp"
-            android:src="@drawable/ic_back" />
+            android:src="@drawable/goback" />
 
         <TextView
             android:layout_width="wrap_content"

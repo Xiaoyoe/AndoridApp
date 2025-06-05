@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_common"
+    android:background="@drawable/login_bg"
     android:orientation="vertical"
     tools:context=".activity.LoginActivity">
 
@@ -17,7 +17,7 @@
             android:layout_width="52dp"
             android:layout_height="52dp"
             android:padding="12dp"
-            android:src="@drawable/ic_back" />
+            android:src="@drawable/goback" />
 
         <!-- 标题文本 -->
         <TextView
@@ -57,7 +57,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="账户："
-                    android:textColor="#000000"
+                    android:textColor="#fff"
                     android:textSize="14sp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginEnd="10dp"
@@ -87,7 +87,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="邮箱："
-                    android:textColor="#000000"
+                    android:textColor="#fff"
                     android:textSize="14sp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginEnd="10dp"
@@ -118,7 +118,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="密码："
-                    android:textColor="#000000"
+                    android:textColor="#fff"
                     android:textSize="14sp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginEnd="10dp"

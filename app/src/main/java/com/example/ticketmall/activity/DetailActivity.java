@@ -25,11 +25,8 @@ import com.gzone.university.utils.CurrentUserUtils;
 public class DetailActivity extends AppCompatActivity {
 
     private ImageView ivBack, ivCover;
-
     private TextView tvTitle, tvScore, tvContent1, tvContent2, tvPrice;
-
     private Button btnAdd;
-
     private Ticket ticket;
 
     @Override
@@ -61,19 +58,33 @@ public class DetailActivity extends AppCompatActivity {
                 finish();
             }
         });
-        Glide.with(this).load(ticket.getImageResId()).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE).into(ivCover);
+
+        int imageResId = ticket.getImageResId(this);
+        if (imageResId != 0) {
+            Glide.with(this)
+                    .load(imageResId)
+                    .skipMemoryCache(true)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .placeholder(R.drawable.error)
+                    .error(R.drawable.error)
+                    .into(ivCover);
+        } else {
+            ivCover.setImageResource(R.drawable.error);
+        }
+
         tvTitle.setText(ticket.getTitle());
         tvScore.setText(ticket.getScore());
         tvContent1.setText(ticket.getContent1());
         tvContent2.setText(ticket.getContent2());
 
-        //保留两位小数
+        // 保留两位小数
         String price = String.format("￥%.2f", ticket.getPrice());
         tvPrice.setText(price);
+
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //添加购物车
+                // 添加购物车
                 BusinessResult<Void> result = CartDB.addCart(CurrentUserUtils.getCurrentUser(User.class).getId(), ticket);
                 Toast.makeText(DetailActivity.this, result.getMessage(), Toast.LENGTH_SHORT).show();
             }
