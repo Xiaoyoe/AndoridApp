@@ -10,6 +10,13 @@ import com.example.ticketmall.utils.HttpUtils;
 public class ApiManager {
     private static final String BASE_URL = "http://10.0.2.2:5000"; // 服务端基础 URL
 
+    // 聊天接口
+    public static void chat(String message, HttpUtils.HttpCallback callback) {
+        String url = BASE_URL + "/ai_chat/chat";
+        String json = "{\"message\": \"" + message + "\"}";
+        HttpUtils.getInstance().postJson(url, json, callback);
+    }
+
     // 登录接口
     public static void login(String username, String password, HttpUtils.HttpCallback callback) {
         String url = BASE_URL + "/auth/login";

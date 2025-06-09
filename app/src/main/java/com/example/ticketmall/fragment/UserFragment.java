@@ -16,6 +16,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import com.example.ticketmall.R;
+import com.example.ticketmall.activity.AIChatActivity;
 import com.example.ticketmall.activity.AboutActivity;
 import com.example.ticketmall.activity.CartActivity;
 import com.example.ticketmall.activity.ExchangeLogActivity;
@@ -29,7 +30,7 @@ import java.util.Locale;
 public class UserFragment extends Fragment {
 
     private TextView tvUsername, tvPoints;
-    private LinearLayout llCart, llOrder, llExchange, llAbout;
+    private LinearLayout llCart, llOrder, llExchange, llAbout, llAiChat;
     private Button btnLogout;
 
     @Nullable
@@ -60,6 +61,7 @@ public class UserFragment extends Fragment {
         llOrder = getView().findViewById(R.id.ll_order);
         llExchange = getView().findViewById(R.id.ll_exchange);
         llAbout = getView().findViewById(R.id.ll_about);
+        llAiChat = getView().findViewById(R.id.ll_ai_chat);
         btnLogout = getView().findViewById(R.id.btn_logout);
     }
 
@@ -89,6 +91,13 @@ public class UserFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), AboutActivity.class);
+                startActivity(intent);
+            }
+        });
+        llAiChat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), AIChatActivity.class);
                 startActivity(intent);
             }
         });

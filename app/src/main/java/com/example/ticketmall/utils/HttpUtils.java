@@ -28,9 +28,9 @@ import okhttp3.Response;
  */
 public class HttpUtils {
     private static final String TAG = "HttpUtils";
-    private static final long CONNECT_TIMEOUT = 10; // 连接超时时间（秒）
-    private static final long READ_TIMEOUT = 10;    // 读取超时时间（秒）
-    private static final long WRITE_TIMEOUT = 10;   // 写入超时时间（秒）
+    private static final long CONNECT_TIMEOUT = 30; // 连接超时时间（秒）
+    private static final long READ_TIMEOUT = 60;    // 读取超时时间（秒）
+    private static final long WRITE_TIMEOUT = 30;   // 写入超时时间（秒）
 
     public static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
 

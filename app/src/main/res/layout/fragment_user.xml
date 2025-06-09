@@ -19,7 +19,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:gravity="center"
-            android:layout_marginTop="24dp"
             android:layout_marginBottom="32dp">
 
             <!-- 头像 -->
@@ -31,7 +30,7 @@
                 android:elevation="4dp"
                 android:padding="4dp"
                 android:layout_gravity="center"
-                android:layout_marginTop="50dp"/>
+                android:layout_marginTop="20dp"/>
 
             <!-- 用户名和积分信息 -->
             <LinearLayout
@@ -180,6 +179,39 @@
                 android:layout_marginStart="16dp"
                 android:layout_weight="1"
                 android:text="关于我们"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_arrow_right"
+                app:tint="@color/black" />
+        </LinearLayout>
+
+        <!-- 新增 AI 询问跳转卡片 -->
+        <LinearLayout
+            android:id="@+id/ll_ai_chat"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bg_user_item"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="20dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:src="@drawable/ic_about"
+            app:tint="@color/main_pressed" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_weight="1"
+                android:text="AI 询问"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
