@@ -20,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="AI 对话"
+            android:text="AI 询问"
             android:textColor="#FFFFFF"
             android:textSize="18sp"
             android:textStyle="bold" />

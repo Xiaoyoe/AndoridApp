@@ -71,6 +71,12 @@ public class AIChatActivity extends AppCompatActivity {
     private void sendMessage(String message) {
         ChatMessage userMessage = new ChatMessage(message, ChatMessage.SENDER_USER);
         chatMessages.add(userMessage);
+
+        // 添加一条“思考中...”的 AI 消息
+        ChatMessage thinkingMessage = new ChatMessage("", ChatMessage.SENDER_AI);
+        thinkingMessage.setStatus(ChatMessage.STATUS_PENDING);
+        chatMessages.add(thinkingMessage);
+
         chatAdapter.notifyDataSetChanged();
         // 调用 AI 接口获取回复
         getAIResponse(message);
@@ -89,8 +95,15 @@ public class AIChatActivity extends AppCompatActivity {
                     new Handler(Looper.getMainLooper()).post(new Runnable() {
                         @Override
                         public void run() {
-                            ChatMessage aiMessage = new ChatMessage(answer, ChatMessage.SENDER_AI);
-                            chatMessages.add(aiMessage);
+                            // 找到最后一条“思考中...”的 AI 消息并更新
+                            for (int i = chatMessages.size() - 1; i >= 0; i--) {
+                                ChatMessage message = chatMessages.get(i);
+                                if (message.getSender() == ChatMessage.SENDER_AI && message.getStatus() == ChatMessage.STATUS_PENDING) {
+                                    message.setMessage(answer);
+                                    message.setStatus(ChatMessage.STATUS_COMPLETED);
+                                    break;
+                                }
+                            }
                             chatAdapter.notifyDataSetChanged();
                         }
                     });
@@ -100,8 +113,15 @@ public class AIChatActivity extends AppCompatActivity {
                     new Handler(Looper.getMainLooper()).post(new Runnable() {
                         @Override
                         public void run() {
-                            ChatMessage aiMessage = new ChatMessage("解析响应数据失败: " + e.getMessage(), ChatMessage.SENDER_AI);
-                            chatMessages.add(aiMessage);
+                            // 找到最后一条“思考中...”的 AI 消息并更新
+                            for (int i = chatMessages.size() - 1; i >= 0; i--) {
+                                ChatMessage message = chatMessages.get(i);
+                                if (message.getSender() == ChatMessage.SENDER_AI && message.getStatus() == ChatMessage.STATUS_PENDING) {
+                                    message.setMessage("解析响应数据失败: " + e.getMessage());
+                                    message.setStatus(ChatMessage.STATUS_COMPLETED);
+                                    break;
+                                }
+                            }
                             chatAdapter.notifyDataSetChanged();
                         }
                     });
@@ -114,8 +134,15 @@ public class AIChatActivity extends AppCompatActivity {
                 new Handler(Looper.getMainLooper()).post(new Runnable() {
                     @Override
                     public void run() {
-                        ChatMessage aiMessage = new ChatMessage("请求失败: " + errorMsg, ChatMessage.SENDER_AI);
-                        chatMessages.add(aiMessage);
+                        // 找到最后一条“思考中...”的 AI 消息并更新
+                        for (int i = chatMessages.size() - 1; i >= 0; i--) {
+                            ChatMessage message = chatMessages.get(i);
+                            if (message.getSender() == ChatMessage.SENDER_AI && message.getStatus() == ChatMessage.STATUS_PENDING) {
+                                message.setMessage("请求失败: " + errorMsg);
+                                message.setStatus(ChatMessage.STATUS_COMPLETED);
+                                break;
+                            }
+                        }
                         chatAdapter.notifyDataSetChanged();
                     }
                 });
