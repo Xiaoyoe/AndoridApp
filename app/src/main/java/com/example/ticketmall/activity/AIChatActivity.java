@@ -1,5 +1,7 @@
 package com.example.ticketmall.activity;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -7,6 +9,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,72 +21,97 @@ import com.example.ticketmall.entity.ChatMessage;
 import com.example.ticketmall.utils.HttpUtils;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
 public class AIChatActivity extends AppCompatActivity {
 
     private ImageView ivBack;
+    private ImageView ivClearHistory;
     private RecyclerView rvChat;
     private EditText etMessage;
     private Button btnSend;
     private ChatAdapter chatAdapter;
     private List<ChatMessage> chatMessages = new ArrayList<>();
+    private static final String PREF_NAME = "ChatPrefs";
+    private static final String CHAT_MESSAGES_KEY = "chat_messages";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_aichat);
         bindView();
+        loadChatMessages();
         initView();
     }
 
     private void bindView() {
         ivBack = findViewById(R.id.iv_back);
+        ivClearHistory = findViewById(R.id.iv_clear_history);
         rvChat = findViewById(R.id.rv_chat);
         etMessage = findViewById(R.id.et_message);
         btnSend = findViewById(R.id.btn_send);
     }
 
     private void initView() {
-        ivBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+        ivBack.setOnClickListener(view -> finish());
+
+        ivClearHistory.setOnClickListener(view -> clearChatHistory());
 
         chatAdapter = new ChatAdapter(chatMessages);
         rvChat.setLayoutManager(new LinearLayoutManager(this));
         rvChat.setAdapter(chatAdapter);
 
-        btnSend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String message = etMessage.getText().toString().trim();
-                if (!message.isEmpty()) {
-                    sendMessage(message);
-                    etMessage.setText("");
-                }
+        // 加载完数据后滚动到底部
+        if (chatMessages.size() > 0) {
+            rvChat.scrollToPosition(chatMessages.size() - 1);
+        }
+
+        btnSend.setOnClickListener(view -> {
+            String message = etMessage.getText().toString().trim();
+            if (!message.isEmpty()) {
+                sendMessage(message);
+                etMessage.setText("");
             }
         });
     }
 
-    private void sendMessage(String message) {
-        ChatMessage userMessage = new ChatMessage(message, ChatMessage.SENDER_USER);
-        chatMessages.add(userMessage);
+    private void clearChatHistory() {
+        new AlertDialog.Builder(this)
+                .setTitle("提示")
+                .setMessage("确定要清除所有聊天记录吗？")
+                .setPositiveButton("确定", (dialog, which) -> {
+                    chatMessages.clear();
+                    chatAdapter.notifyDataSetChanged();
 
-        // 添加一条“思考中...”的 AI 消息
-        ChatMessage thinkingMessage = new ChatMessage("", ChatMessage.SENDER_AI);
-        thinkingMessage.setStatus(ChatMessage.STATUS_PENDING);
-        chatMessages.add(thinkingMessage);
+                    SharedPreferences prefs = getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+                    prefs.edit().remove(CHAT_MESSAGES_KEY).apply();
 
-        chatAdapter.notifyDataSetChanged();
-        // 调用 AI 接口获取回复
-        getAIResponse(message);
+                    Toast.makeText(this, "聊天记录已清除", Toast.LENGTH_SHORT).show();
+                })
+                .setNegativeButton("取消", (dialog, which) -> dialog.dismiss())
+                .create()
+                .show();
     }
 
-    private void getAIResponse(String message) {
+    private void sendMessage(String message) {
+        ChatMessage userMessage = new ChatMessage(message, ChatMessage.SENDER_USER, 0);
+        chatMessages.add(userMessage);
+        chatAdapter.notifyDataSetChanged();
+        rvChat.smoothScrollToPosition(chatMessages.size() - 1);
+
+        ChatMessage thinkingMessage = new ChatMessage("思考中...", ChatMessage.SENDER_AI, 0);
+        int thinkingMessageIndex = chatMessages.size();
+        chatMessages.add(thinkingMessage);
+        chatAdapter.notifyDataSetChanged();
+        rvChat.smoothScrollToPosition(chatMessages.size() - 1);
+
+        getAIResponse(message, thinkingMessageIndex);
+    }
+
+    private void getAIResponse(String message, int thinkingMessageIndex) {
         ApiManager.chat(message, new HttpUtils.HttpCallback() {
             @Override
             public void onSuccess(String response) {
@@ -91,62 +120,54 @@ public class AIChatActivity extends AppCompatActivity {
                     JsonObject jsonObject = gson.fromJson(response, JsonObject.class);
                     String answer = jsonObject.get("answer").getAsString();
 
-                    // 在主线程更新 UI
-                    new Handler(Looper.getMainLooper()).post(new Runnable() {
-                        @Override
-                        public void run() {
-                            // 找到最后一条“思考中...”的 AI 消息并更新
-                            for (int i = chatMessages.size() - 1; i >= 0; i--) {
-                                ChatMessage message = chatMessages.get(i);
-                                if (message.getSender() == ChatMessage.SENDER_AI && message.getStatus() == ChatMessage.STATUS_PENDING) {
-                                    message.setMessage(answer);
-                                    message.setStatus(ChatMessage.STATUS_COMPLETED);
-                                    break;
-                                }
-                            }
-                            chatAdapter.notifyDataSetChanged();
-                        }
+                    new Handler(Looper.getMainLooper()).post(() -> {
+                        chatMessages.get(chatMessages.size() - 2).status = 1;
+                        chatMessages.set(thinkingMessageIndex, new ChatMessage(answer, ChatMessage.SENDER_AI, 1));
+                        chatAdapter.notifyDataSetChanged();
+                        saveChatMessages();
+                        rvChat.smoothScrollToPosition(chatMessages.size() - 1);
                     });
                 } catch (Exception e) {
                     e.printStackTrace();
-                    // 处理解析异常，在主线程更新 UI
-                    new Handler(Looper.getMainLooper()).post(new Runnable() {
-                        @Override
-                        public void run() {
-                            // 找到最后一条“思考中...”的 AI 消息并更新
-                            for (int i = chatMessages.size() - 1; i >= 0; i--) {
-                                ChatMessage message = chatMessages.get(i);
-                                if (message.getSender() == ChatMessage.SENDER_AI && message.getStatus() == ChatMessage.STATUS_PENDING) {
-                                    message.setMessage("解析响应数据失败: " + e.getMessage());
-                                    message.setStatus(ChatMessage.STATUS_COMPLETED);
-                                    break;
-                                }
-                            }
-                            chatAdapter.notifyDataSetChanged();
-                        }
+                    new Handler(Looper.getMainLooper()).post(() -> {
+                        chatMessages.get(chatMessages.size() - 2).status = 2;
+                        chatMessages.set(thinkingMessageIndex, new ChatMessage("解析响应数据失败: " + e.getMessage(), ChatMessage.SENDER_AI, 2));
+                        chatAdapter.notifyDataSetChanged();
+                        saveChatMessages();
+                        rvChat.smoothScrollToPosition(chatMessages.size() - 1);
                     });
                 }
             }
 
             @Override
             public void onFailure(String errorMsg) {
-                // 在主线程更新 UI
-                new Handler(Looper.getMainLooper()).post(new Runnable() {
-                    @Override
-                    public void run() {
-                        // 找到最后一条“思考中...”的 AI 消息并更新
-                        for (int i = chatMessages.size() - 1; i >= 0; i--) {
-                            ChatMessage message = chatMessages.get(i);
-                            if (message.getSender() == ChatMessage.SENDER_AI && message.getStatus() == ChatMessage.STATUS_PENDING) {
-                                message.setMessage("请求失败: " + errorMsg);
-                                message.setStatus(ChatMessage.STATUS_COMPLETED);
-                                break;
-                            }
-                        }
-                        chatAdapter.notifyDataSetChanged();
-                    }
+                new Handler(Looper.getMainLooper()).post(() -> {
+                    chatMessages.get(chatMessages.size() - 2).status = 2;
+                    chatMessages.set(thinkingMessageIndex, new ChatMessage("请求失败: " + errorMsg, ChatMessage.SENDER_AI, 2));
+                    chatAdapter.notifyDataSetChanged();
+                    saveChatMessages();
+                    rvChat.smoothScrollToPosition(chatMessages.size() - 1);
                 });
             }
         });
+    }
+
+    private void loadChatMessages() {
+        SharedPreferences prefs = getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        String json = prefs.getString(CHAT_MESSAGES_KEY, null);
+        if (json != null) {
+            Gson gson = new Gson();
+            Type type = new TypeToken<List<ChatMessage>>() {}.getType();
+            chatMessages = gson.fromJson(json, type);
+        }
+    }
+
+    private void saveChatMessages() {
+        SharedPreferences prefs = getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(chatMessages);
+        editor.putString(CHAT_MESSAGES_KEY, json);
+        editor.apply();
     }
 }
