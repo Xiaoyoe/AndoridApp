@@ -21,7 +21,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="AI 询问"
+            android:text="AI 聊天小助手"
             android:textColor="#FFFFFF"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -32,7 +32,7 @@
             android:layout_height="52dp"
             android:layout_gravity="end"
             android:padding="12dp"
-            android:src="@drawable/error" />
+            android:src="@drawable/bg_qingli" />
     </FrameLayout>
 
     <!-- 主内容区 -->

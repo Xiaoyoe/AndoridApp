@@ -203,7 +203,7 @@
             <ImageView
                 android:layout_width="28dp"
                 android:layout_height="28dp"
-                android:src="@drawable/ic_about"
+                android:src="@drawable/ic_ai"
             app:tint="@color/main_pressed" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -211,7 +211,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_weight="1"
-                android:text="AI 询问"
+                android:text="AI 聊天小助手"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 

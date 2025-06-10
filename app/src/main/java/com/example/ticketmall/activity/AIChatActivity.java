@@ -97,6 +97,10 @@ public class AIChatActivity extends AppCompatActivity {
     }
 
     private void sendMessage(String message) {
+        // 禁用发送按钮
+        btnSend.setEnabled(false);
+        btnSend.setAlpha(0.5f); // 设置半透明效果，表示禁用状态
+
         ChatMessage userMessage = new ChatMessage(message, ChatMessage.SENDER_USER, 0);
         chatMessages.add(userMessage);
         chatAdapter.notifyDataSetChanged();
@@ -126,6 +130,10 @@ public class AIChatActivity extends AppCompatActivity {
                         chatAdapter.notifyDataSetChanged();
                         saveChatMessages();
                         rvChat.smoothScrollToPosition(chatMessages.size() - 1);
+
+                        // 启用发送按钮
+                        btnSend.setEnabled(true);
+                        btnSend.setAlpha(1.0f); // 恢复完全不透明
                     });
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -135,6 +143,10 @@ public class AIChatActivity extends AppCompatActivity {
                         chatAdapter.notifyDataSetChanged();
                         saveChatMessages();
                         rvChat.smoothScrollToPosition(chatMessages.size() - 1);
+
+                        // 启用发送按钮
+                        btnSend.setEnabled(true);
+                        btnSend.setAlpha(1.0f);
                     });
                 }
             }
@@ -147,6 +159,10 @@ public class AIChatActivity extends AppCompatActivity {
                     chatAdapter.notifyDataSetChanged();
                     saveChatMessages();
                     rvChat.smoothScrollToPosition(chatMessages.size() - 1);
+
+                    // 启用发送按钮
+                    btnSend.setEnabled(true);
+                    btnSend.setAlpha(1.0f);
                 });
             }
         });
